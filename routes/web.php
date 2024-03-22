@@ -18,6 +18,9 @@ Route::get('/manageorders', [DashboardController::class, 'getAllOrders'])
 Route::delete('/delete/{id}', [DashboardController::class, 'softDelete'])
     ->middleware(['auth', 'verified'])->name('dashboard.softDelete');
 
+Route::post('/manage/add', [DashboardController::class, 'addNewProduct']);
+// ->middleware(['auth', 'verified'])->name('dashboard.addNewProducts');
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

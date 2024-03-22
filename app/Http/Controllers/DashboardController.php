@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Product;
@@ -78,5 +79,38 @@ class DashboardController extends Controller
         $product->update(['deleted' => true]);
 
         return redirect()->back()->with('success', 'Sản phẩm đã được xóa tạm thời.');
+    }
+    public function addNewProduct(Request $request)
+    {
+        // Validate dữ liệu
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:255',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'price' => 'required|numeric',
+            'category_id' => 'required|numeric|exists:categories,id',
+        ]);
+
+        // Kiểm tra nếu có lỗi
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        // Đọc nội dung của tập tin hình ảnh và mã hóa thành chuỗi Base64
+        $imageContent = base64_encode(file_get_contents($request->file('image')->path()));
+        $base64Image = 'data:image/png;base64,' . $imageContent;
+        // Tạo mới sản phẩm
+        $product = new Product();
+        $product->name = $request->input('name');
+        $product->image = $base64Image; // Lưu chuỗi Base64 vào trường 'image'
+        $product->price = $request->input('price');
+        $product->category_id = $request->input('category_id');
+
+        // die($product->name);
+        $product->save();
+
+        // Chuyển hướng về trang trước với thông báo thành công
+        return redirect()->back()->with('success', 'Thêm sản phẩm mới thành công.');
     }
 }

@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+.btn-add-trash{
+    position: absolute;
+    top: 7px;
+    left: 3px;
+    z-index: 1;
+}
 nav.main-header.navbar.navbar-expand.navbar-white.navbar-light {
     position: fixed;
     top: 0;
@@ -57,4 +63,17 @@ table.dataTable th.dt-type-numeric{
     color: #999;
     text-decoration: none;
     cursor: pointer;
+}
+button.btn.btn-primary {
+    color: #fff;
+    background-color: #0069d9;
+    border-color: #0062cc;
+}
+.close{
+    color: #000;
+}
+.btn-add-trash{
+    position: absolute;
+    top: 10px;
+    left: 5px;
 }

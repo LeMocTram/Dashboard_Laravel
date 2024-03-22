@@ -28,6 +28,7 @@
         <!-- Daterange picker -->
         <link rel="stylesheet" href="plugins/daterangepicker/daterangepicker.css">
         <!-- summernote -->
+        
         {{-- JQuery --}}
         <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
         {{-- Datatables --}}
@@ -88,6 +89,10 @@
   <script src="plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
   <!-- AdminLTE App -->
   <script src="dist/js/adminlte.js"></script>
+   <!-- AdminLTE for demo purposes -->
+  {{-- <script src="dist/js/demo.js"></script> --}}
+  <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+  <script src="dist/js/pages/dashboard.js"></script>
  
   <script type="text/javascript">
     $(function(){
