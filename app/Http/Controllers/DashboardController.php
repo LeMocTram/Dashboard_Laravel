@@ -58,27 +58,25 @@ class DashboardController extends Controller
         if ($request->ajax()) {
             return datatables()->of(Order::all())->toJson();
         }
-        // $result = datatables()->of(Order::all())->toJson();
-        // die($result);
         return view('manage.orders');
     }
-    // public function softDelete(Request $request, $id)
-    // {
-    //     // Kiểm tra xác thực của yêu cầu
-    //     // $this->validate($request, [
-    //     //     'id' => 'required|exists:products,id',
-    //     // ]);
+    public function softDelete(Request $request, $id)
+    {
+        // Kiểm tra xác thực của yêu cầu
+        // $this->validate($request, [
+        //     'id' => 'required|exists:products,id',
+        // ]);
 
-    //     // Tìm sản phẩm để update trường deleted
-    //     $product = Product::find($id);
+        // Tìm sản phẩm để update trường deleted
+        $product = Product::find($id);
 
-    //     if (!$product) {
-    //         return redirect()->back()->with('error', 'Sản phẩm không tồn tại.');
-    //     }
+        if (!$product) {
+            return redirect()->back()->with('error', 'Sản phẩm không tồn tại.');
+        }
 
-    //     // Update trường deleted của sản phẩm
-    //     $product->update(['deleted' => true]);
+        // Update trường deleted của sản phẩm
+        $product->update(['deleted' => true]);
 
-    //     return redirect()->back()->with('success', 'Sản phẩm đã được xóa tạm thời.');
-    // }
+        return redirect()->back()->with('success', 'Sản phẩm đã được xóa tạm thời.');
+    }
 }

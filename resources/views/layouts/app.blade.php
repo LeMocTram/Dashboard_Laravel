@@ -99,8 +99,16 @@
               "columns": [
                 { "data": "id" },
                 { "data": "name" },
-                { "data": "created_at" },
-                { "data": "updated_at" }
+                { "data": "created_at",
+                "render": function(data, type, row) {
+                    // Sử dụng Moment.js để định dạng ngày giờ
+                    return moment(data).format('HH:mm - DD/MM/YYYY');
+                } },
+                { "data": "updated_at",
+                "render": function(data, type, row) {
+                    // Sử dụng Moment.js để định dạng ngày giờ
+                    return moment(data).format('HH:mm - DD/MM/YYYY');
+                } }
               ]
         });
          var table = $('#products_table').DataTable({
@@ -111,16 +119,37 @@
               "columns": [
                 { "data": "id" },
                 { "data": "name" },
-                { "data": "image" },
+                {
+                    "data": "image",
+                    "render": function(data, type, row) {
+                        return '<img src="' + data + '"onclick="openModal(`'
+                        + data +'`)" style="max-width: 60px; max-height: 60px; cursor: pointer;" />';
+                    }
+                },
                 { "data": "price" },
-                { "data": "catelogy_id" },
-                { "data": "created_at" },
-                { "data": "updated_at" },
+                { "data": "category_id" },
+               { "data": "created_at",
+                "render": function(data, type, row) {
+                    // Sử dụng Moment.js để định dạng ngày giờ
+                    return moment(data).format('HH:mm - DD/MM/YYYY');
+                } },
+                { "data": "updated_at",
+                "render": function(data, type, row) {
+                    // Sử dụng Moment.js để định dạng ngày giờ
+                    return moment(data).format('HH:mm - DD/MM/YYYY');
+                } },
                 {
                     "data": null,
                         "render": function(data, type, row) {
-                            return '<a href="#' + data.id + '"><i class="fas fa-edit"></i></a> ' +
-                                '<a href="/delete/' + data.id + '"><i class="fas fa-trash-alt"></i></a>';
+                             return '<a href="#' + data.id + '"><i class="fas fa-edit"></i></a> ' +
+                      '<form id="delete-form-' + data.id + '" action="/delete/'+ data.id +
+                      '" method="POST" style="display: inline;">' +
+                      '@csrf' +
+                      '@method("DELETE")' +
+                      '<button type="submit" onclick="return confirm(\'You want to delete this product?\')"'+
+                      '<i class="fas fa-trash-alt"></i></button>'
+                      +
+                      '</form>';
                         }
                  },
 
@@ -136,8 +165,16 @@
                 { "data": "email" },
                 { "data": "password" },
                 { "data": "name" },
-                { "data": "created_at" },
-                { "data": "updated_at" }
+                { "data": "created_at",
+                "render": function(data, type, row) {
+                    // Sử dụng Moment.js để định dạng ngày giờ
+                    return moment(data).format('HH:mm - DD/MM/YYYY');
+                } },
+                { "data": "updated_at",
+                "render": function(data, type, row) {
+                    // Sử dụng Moment.js để định dạng ngày giờ
+                    return moment(data).format('HH:mm - DD/MM/YYYY');
+                } }
               ]
         });
         var table = $('#orders_table').DataTable({
@@ -155,13 +192,33 @@
                 { "data": "fullname" },
                 { "data": "note" },
                 { "data": "method" },
-                { "data": "created_at" },
-                { "data": "updated_at" }
+               { "data": "created_at",
+                "render": function(data, type, row) {
+                    // Sử dụng Moment.js để định dạng ngày giờ
+                    return moment(data).format('HH:mm - DD/MM/YYYY');
+                } },
+                { "data": "updated_at",
+                "render": function(data, type, row) {
+                    // Sử dụng Moment.js để định dạng ngày giờ
+                    return moment(data).format('HH:mm - DD/MM/YYYY');
+                } }
               ]
         });
         
     });
    
+    function openModal(imageSrc) {
+            var modal = document.getElementById("imgModel");
+            var modalImg = document.getElementById("img01");
+            modal.style.display = "block";
+            modalImg.src = imageSrc;
+        }
+
+        // Đóng modal khi click vào nút close
+        document.getElementsByClassName("close")[0].onclick = function () {
+            var modal = document.getElementById("imgModel");
+            modal.style.display = "none";
+        }
 </script>
     </body>
 </html>

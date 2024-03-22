@@ -53,6 +53,10 @@
       </section>
       <!-- /.content -->
     </div>
+    <div id="imgModel" class="imgModel">
+        <span class="close">&times;</span>
+        <img class="imgModel-content" id="img01">
+    </div>
   
     <!-- /.content-wrapper -->
 </x-app-layout>
