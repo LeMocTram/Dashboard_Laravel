@@ -28,7 +28,12 @@
         <!-- Daterange picker -->
         <link rel="stylesheet" href="plugins/daterangepicker/daterangepicker.css">
         <!-- summernote -->
-      
+        {{-- JQuery --}}
+        <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+        {{-- Datatables --}}
+        <link rel="stylesheet" href="https://cdn.datatables.net/2.0.2/css/dataTables.dataTables.min.css">
+        <script src="https://cdn.datatables.net/2.0.2/js/dataTables.min.js"></script>
+        {{-- Datatables --}}
         <link rel="stylesheet" href="plugins/summernote/summernote-bs4.min.css">
         {{-- Admin LTE --}}
         <!-- Scripts -->
@@ -55,8 +60,6 @@
         </div>
 
 
-        <!-- jQuery -->
-  <script src="plugins/jquery/jquery.min.js"></script>
   <!-- jQuery UI 1.11.4 -->
   <script src="plugins/jquery-ui/jquery-ui.min.js"></script>
   <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
@@ -85,9 +88,80 @@
   <script src="plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
   <!-- AdminLTE App -->
   <script src="dist/js/adminlte.js"></script>
-  <!-- AdminLTE for demo purposes -->
-  {{-- <script src="dist/js/demo.js"></script> --}}
-  <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-  <script src="dist/js/pages/dashboard.js"></script>
+ 
+  <script type="text/javascript">
+    $(function(){
+        var table = $('#categories_table').DataTable({
+            "responsive": true, "lengthChange": false, "autoWidth": false,
+              "processing": true,
+              "serverSide": true,
+              "ajax": "{{ route('dashboard.getAllCategories') }}",
+              "columns": [
+                { "data": "id" },
+                { "data": "name" },
+                { "data": "created_at" },
+                { "data": "updated_at" }
+              ]
+        });
+         var table = $('#products_table').DataTable({
+            "responsive": true, "lengthChange": false, "autoWidth": false,
+              "processing": true,
+              "serverSide": true,
+              "ajax": "{{ route('dashboard.getAllProducts') }}",
+              "columns": [
+                { "data": "id" },
+                { "data": "name" },
+                { "data": "image" },
+                { "data": "price" },
+                { "data": "catelogy_id" },
+                { "data": "created_at" },
+                { "data": "updated_at" },
+                {
+                    "data": null,
+                        "render": function(data, type, row) {
+                            return '<a href="#' + data.id + '"><i class="fas fa-edit"></i></a> ' +
+                                '<a href="/delete/' + data.id + '"><i class="fas fa-trash-alt"></i></a>';
+                        }
+                 },
+
+              ]
+        });
+        var table = $('#customers_table').DataTable({
+            "responsive": true, "lengthChange": false, "autoWidth": false,
+              "processing": true,
+              "serverSide": true,
+              "ajax": "{{ route('dashboard.getAllCustomers') }}",
+              "columns": [
+                { "data": "id" },
+                { "data": "email" },
+                { "data": "password" },
+                { "data": "name" },
+                { "data": "created_at" },
+                { "data": "updated_at" }
+              ]
+        });
+        var table = $('#orders_table').DataTable({
+            "responsive": true, "lengthChange": false, "autoWidth": false,
+              "processing": true,
+              "serverSide": true,
+              "ajax": "{{ route('dashboard.getAllOrders') }}",
+              "columns": [
+                { "data": "id" },
+                { "data": "customer_id" },
+                { "data": "phone" },
+                { "data": "email" },
+                { "data": "address" },
+                { "data": "total" },
+                { "data": "fullname" },
+                { "data": "note" },
+                { "data": "method" },
+                { "data": "created_at" },
+                { "data": "updated_at" }
+              ]
+        });
+        
+    });
+   
+</script>
     </body>
 </html>

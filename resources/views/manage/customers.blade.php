@@ -26,18 +26,15 @@
             <div class="row">
                 <div class="col-12">
                     <div class="card">
-                        {{-- <button type="button" class="col-2 btn btn-primary btn-sm">Small button</button> --}}
-                        <table id="products_table" class="table table-bordered table-striped">
+                        <table id="customers_table" class="table table-bordered table-striped">
                             <thead>
                                 <tr>
                                     <th>ID</th>
+                                    <th>Email</th>
+                                    <th>Password</th>
                                     <th>Name</th>
-                                    <th>Image</th>
-                                    <th>Price</th>
-                                    <th>Category</th>
                                     <th>Created At</th>
                                     <th>Updated At</th>
-                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>

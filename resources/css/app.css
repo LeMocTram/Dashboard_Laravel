@@ -9,3 +9,6 @@ body:not(.layout-fixed) .main-sidebar {
     position: fixed;
     top: 0;
 }
+table.dataTable th.dt-type-numeric{
+    text-align: left;
+}

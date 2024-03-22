@@ -26,18 +26,20 @@
             <div class="row">
                 <div class="col-12">
                     <div class="card">
-                        {{-- <button type="button" class="col-2 btn btn-primary btn-sm">Small button</button> --}}
-                        <table id="products_table" class="table table-bordered table-striped">
+                        <table id="orders_table" class="table table-bordered table-striped">
                             <thead>
                                 <tr>
                                     <th>ID</th>
-                                    <th>Name</th>
-                                    <th>Image</th>
-                                    <th>Price</th>
-                                    <th>Category</th>
+                                    <th>Customer_ID</th>
+                                    <th>Phone</th>
+                                    <th>Email</th>
+                                    <th>Address</th>
+                                    <th>Total</th>
+                                    <th>Fullname</th>
+                                    <th>Note</th>
+                                    <th>Method Payment</th>
                                     <th>Created At</th>
                                     <th>Updated At</th>
-                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
