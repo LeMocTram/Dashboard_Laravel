@@ -47,6 +47,14 @@ class DashboardController extends Controller
         }
         return view('manage.products');
     }
+    public function getAllProductsInTrash(Request $request)
+    {
+        if ($request->ajax()) {
+            $products = Product::where('deleted', 1)->get();
+            return datatables()->of($products)->toJson();
+        }
+        return view('manage.trash');
+    }
     public function getAllCustomers(Request $request)
     {
         if ($request->ajax()) {
@@ -80,6 +88,25 @@ class DashboardController extends Controller
 
         return redirect()->back()->with('success', 'Sản phẩm đã được xóa tạm thời.');
     }
+    public function restore(Request $request, $id)
+    {
+        // Kiểm tra xác thực của yêu cầu
+        // $this->validate($request, [
+        //     'id' => 'required|exists:products,id',
+        // ]);
+
+        // Tìm sản phẩm để update trường deleted
+        $product = Product::find($id);
+
+        if (!$product) {
+            return redirect()->back()->with('error', 'Sản phẩm không tồn tại.');
+        }
+
+        // Update trường deleted của sản phẩm
+        $product->update(['deleted' => false]);
+
+        return redirect()->back()->with('success', 'Retore success');
+    }
     public function addNewProduct(Request $request)
     {
         // Validate dữ liệu
@@ -97,20 +124,94 @@ class DashboardController extends Controller
                 ->withInput();
         }
 
-        // Đọc nội dung của tập tin hình ảnh và mã hóa thành chuỗi Base64
+
         $imageContent = base64_encode(file_get_contents($request->file('image')->path()));
         $base64Image = 'data:image/png;base64,' . $imageContent;
-        // Tạo mới sản phẩm
+
         $product = new Product();
         $product->name = $request->input('name');
-        $product->image = $base64Image; // Lưu chuỗi Base64 vào trường 'image'
+        $product->image = $base64Image;
         $product->price = $request->input('price');
         $product->category_id = $request->input('category_id');
-
-        // die($product->name);
         $product->save();
 
-        // Chuyển hướng về trang trước với thông báo thành công
+
         return redirect()->back()->with('success', 'Thêm sản phẩm mới thành công.');
+    }
+    public function updateProduct(Request $request, $id)
+    {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:255',
+            'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+            'price' => 'required|numeric',
+            'category_id' => 'required|numeric|exists:categories,id',
+        ]);
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+        $updateData = [
+            'name' => $request->input('name'),
+            'price' => $request->input('price'),
+            'category_id' => $request->input('category_id'),
+        ];
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $base64Image = base64_encode(file_get_contents($image->getRealPath()));
+            $updateData['image'] = $base64Image;
+        }
+
+        Product::where('id', $id)->update($updateData);
+        return redirect()->back()->with('success', 'Update success');
+    }
+
+
+
+
+    // API
+
+    public function get_all_products()
+    {
+        $products = Product::all();
+        return response()->json($products, 200);
+    }
+    public function find_product_by_id($id)
+    {
+        $product = Product::find($id);
+        if ($product === null) {
+            return response()->json(['message' => 'Not found'], 404);
+        } else {
+            return response()->json($product, 200);
+        }
+    }
+    public function add_new_product(Request $request)
+    {
+        // Validate dữ liệu
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:255',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'price' => 'required|numeric',
+            'category_id' => 'required|numeric|exists:categories,id',
+        ]);
+
+        // Kiểm tra nếu có lỗi
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+
+        $imageContent = base64_encode(file_get_contents($request->file('image')->path()));
+        $base64Image = 'data:image/png;base64,' . $imageContent;
+
+        $product = new Product();
+        $product->name = $request->input('name');
+        $product->image = $base64Image;
+        $product->price = $request->input('price');
+        $product->category_id = $request->input('category_id');
+        $product->save();
+        return response()->json(['mesage' => 'success!'], 201);
     }
 }

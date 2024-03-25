@@ -13,14 +13,19 @@ Route::get('/manageproducts', [DashboardController::class, 'getAllProducts'])
     ->middleware(['auth', 'verified'])->name('dashboard.getAllProducts');
 Route::get('/managecustomers', [DashboardController::class, 'getAllCustomers'])
     ->middleware(['auth', 'verified'])->name('dashboard.getAllCustomers');
+Route::get('/managetrash', [DashboardController::class, 'getAllProductsInTrash'])
+    ->middleware(['auth', 'verified'])->name('dashboard.getAllProductsInTrash');
 Route::get('/manageorders', [DashboardController::class, 'getAllOrders'])
     ->middleware(['auth', 'verified'])->name('dashboard.getAllOrders');
 Route::delete('/delete/{id}', [DashboardController::class, 'softDelete'])
     ->middleware(['auth', 'verified'])->name('dashboard.softDelete');
 
-Route::post('/manage/add', [DashboardController::class, 'addNewProduct']);
-// ->middleware(['auth', 'verified'])->name('dashboard.addNewProducts');
-
+Route::put('/restore/{id}', [DashboardController::class, 'restore'])
+    ->middleware(['auth', 'verified'])->name('dashboard.restore');
+Route::post('/manage/add', [DashboardController::class, 'addNewProduct'])
+    ->middleware(['auth', 'verified'])->name('dashboard.addNewProducts');
+Route::put('/update/{id}', [DashboardController::class, 'updateProduct'])
+    ->middleware(['auth', 'verified'])->name('dashboard.updateProduct');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

@@ -146,7 +146,7 @@
                 {
                     "data": null,
                         "render": function(data, type, row) {
-                             return '<a href="#' + data.id + '"><i class="fas fa-edit"></i></a> ' +
+                             return '<a type="button"><i class="fas fa-edit edit-product"></i></a> ' +
                       '<form id="delete-form-' + data.id + '" action="/delete/'+ data.id +
                       '" method="POST" style="display: inline;">' +
                       '@csrf' +
@@ -155,6 +155,49 @@
                       '<i class="fas fa-trash-alt"></i></button>'
                       +
                       '</form>';
+                        }
+                 },
+
+              ]
+        });
+         var table = $('#trash_table').DataTable({
+            "responsive": true, "lengthChange": false, "autoWidth": false,
+              "processing": true,
+              "serverSide": true,
+              "ajax": "{{ route('dashboard.getAllProductsInTrash') }}",
+              "columns": [
+                { "data": "id" },
+                { "data": "name" },
+                {
+                    "data": "image",
+                    "render": function(data, type, row) {
+                        return '<img src="' + data + '"onclick="openModal(`'
+                        + data +'`)" style="max-width: 60px; max-height: 60px; cursor: pointer;" />';
+                    }
+                },
+                { "data": "price" },
+                { "data": "category_id" },
+               { "data": "created_at",
+                "render": function(data, type, row) {
+                    // Sử dụng Moment.js để định dạng ngày giờ
+                    return moment(data).format('HH:mm - DD/MM/YYYY');
+                } },
+                { "data": "updated_at",
+                "render": function(data, type, row) {
+                    // Sử dụng Moment.js để định dạng ngày giờ
+                    return moment(data).format('HH:mm - DD/MM/YYYY');
+                } },
+                {
+                    "data": null,
+                        "render": function(data, type, row) {
+                             return '<form id="restore-form-' + data.id + '" action="/restore/'+ data.id +
+                      '" method="POST" style="display: inline;">' +
+                      '@csrf' +
+                      '@method("PUT")' +
+                        '<input type="submit" value="Restore" class="btn btn-success float-right">'
+                      +
+                      '</form>'
+                            
                         }
                  },
 
@@ -213,17 +256,40 @@
     });
    
     function openModal(imageSrc) {
-            var modal = document.getElementById("imgModel");
-            var modalImg = document.getElementById("img01");
-            modal.style.display = "block";
-            modalImg.src = imageSrc;
-        }
+        var modal = document.getElementById("imgModel");
+        var modalImg = document.getElementById("img01");
+        modal.style.display = "block";
+        modalImg.src = imageSrc;
+    }
 
         // Đóng modal khi click vào nút close
-        document.getElementsByClassName("close")[0].onclick = function () {
-            var modal = document.getElementById("imgModel");
-            modal.style.display = "none";
-        }
+    document.getElementsByClassName("close")[0].onclick = function () {
+        var modal = document.getElementById("imgModel");
+        modal.style.display = "none";
+    }
+
+
+    $(document).ready(function() {
+        $('body').on('click', '.edit-product', function() {
+          var rowData = $(this).closest('tr');
+          var data = $('#products_table').DataTable().row(rowData).data();
+          if (data) {
+            console.log(data);
+            document.getElementById('idProduct').value = data.id;
+            document.getElementById('productName').value = data.name;
+            document.getElementById('imgproduct').src=data.image;
+            document.getElementById('chooseCategory').value = data.category_id;
+            document.getElementById('productPrice').value = data.price;
+            var url = '/update/'+data.id;
+            $('#editForm').attr('action', url);
+          } else {
+            console.log("No data available for the clicked row.");
+          }
+            $("#modal-edit-product").modal();
+        });
+    });
+
+       
 </script>
     </body>
 </html>

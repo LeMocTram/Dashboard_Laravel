@@ -64,10 +64,14 @@ table.dataTable th.dt-type-numeric{
     text-decoration: none;
     cursor: pointer;
 }
-button.btn.btn-primary {
+button.btn.btn-primary,
+a.btn.btn-primary {
     color: #fff;
     background-color: #0069d9;
     border-color: #0062cc;
+}
+input.btn.btn-success.float-right{
+        background-color: #218838;
 }
 .close{
     color: #000;
