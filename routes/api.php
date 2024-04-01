@@ -1,12 +1,30 @@
 <?php
 
-use App\Http\Controllers\DashboardController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\ApiController;
 
-Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:sanctum');
+// Route::get("/user", function (Request $request) {
+//     return $request->user();
+// })->middleware("auth:sanctum");
 
-Route::get("/products", [DashboardController::class, 'get_all_products']);
-Route::get("/product/{id}", [DashboardController::class, 'find_product_by_id']);
+
+// api public
+Route::post("/register", [ApiController::class, "register"]);
+Route::post("/login", [ApiController::class, "login"]);
+
+Route::group([
+    "middleware" => ["auth:sanctum"]
+], function () {
+    Route::get("/profile", [ApiController::class, "profile"]);
+    Route::post("/manage/product/add-new-product", [ApiController::class, "add_new_product"]);
+    Route::get("/manage/product/{id}", [ApiController::class, "find_product_by_id"]);
+    Route::get("/manage/product", [ApiController::class, "get_all_products"]);
+    Route::get("/manage/customer", [ApiController::class, "get_all_customers"]);
+    Route::get("/manage/order", [ApiController::class, "get_all_orders"]);
+    Route::get("/manage/orderdetail", [ApiController::class, "get_all_orderdetails"]);
+    Route::get("/manage/trash", [ApiController::class, "get_all_products_in_trash"]);
+    Route::delete("/manage/product/delete/{id}", [ApiController::class, "soft_delete"]);
+
+
+    Route::get("/logout", [ApiController::class, "logout"]);
+});
