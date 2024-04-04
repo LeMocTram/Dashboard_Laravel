@@ -41,7 +41,7 @@
               <div class="icon">
                 <i class="ion ion-bag"></i>
               </div>
-              <a href="/managecategories" class="small-box-footer">More info
+              <a href="/manage-categories" class="small-box-footer">More info
                 <i class="fas fa-arrow-circle-right"></i></a>
             </div>
           </div>
@@ -57,7 +57,7 @@
               <div class="icon">
                 <i class="ion ion-stats-bars"></i>
               </div>
-              <a href="/manageproducts" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+              <a href="/manage-products" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
           </div>
           <!-- ./col -->
@@ -87,7 +87,7 @@
               <div class="icon">
                 <i class="ion ion-pie-graph"></i>
               </div>
-              <a href="manageorders" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+              <a href="manage-orders" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
           </div>
           <!-- ./col -->

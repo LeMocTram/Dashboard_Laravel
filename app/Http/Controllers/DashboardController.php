@@ -9,7 +9,7 @@ use App\Models\Category;
 use App\Models\Product;
 use App\Models\Customer;
 use App\Models\Order;
-
+use App\Models\OrderDetail;
 
 class DashboardController extends Controller
 {
@@ -64,10 +64,22 @@ class DashboardController extends Controller
     }
     public function getAllOrders(Request $request)
     {
+        // dump($request);
         if ($request->ajax()) {
             return datatables()->of(Order::all())->toJson();
+            die;
         }
         return view('manage.orders');
+    }
+    public function getOrderDetails(Request $request, $id)
+    {
+        // dump($request);
+        if ($request->ajax()) {
+            $orderDetails = OrderDetail::where('order_id', $id)->get();
+            return datatables()->of($orderDetails)->toJson();
+            die;
+        }
+        return view('manage.orderDetails');
     }
     public function softDelete(Request $request, $id)
     {
@@ -164,54 +176,5 @@ class DashboardController extends Controller
 
         Product::where('id', $id)->update($updateData);
         return redirect()->back()->with('success', 'Update success');
-    }
-
-
-
-
-    // API
-
-    public function get_all_products()
-    {
-        $products = Product::all();
-        return response()->json($products, 200);
-    }
-    public function find_product_by_id($id)
-    {
-        $product = Product::find($id);
-        if ($product === null) {
-            return response()->json(['message' => 'Not found'], 404);
-        } else {
-            return response()->json($product, 200);
-        }
-    }
-    public function add_new_product(Request $request)
-    {
-        // Validate dữ liệu
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'price' => 'required|numeric',
-            'category_id' => 'required|numeric|exists:categories,id',
-        ]);
-
-        // Kiểm tra nếu có lỗi
-        if ($validator->fails()) {
-            return redirect()->back()
-                ->withErrors($validator)
-                ->withInput();
-        }
-
-
-        $imageContent = base64_encode(file_get_contents($request->file('image')->path()));
-        $base64Image = 'data:image/png;base64,' . $imageContent;
-
-        $product = new Product();
-        $product->name = $request->input('name');
-        $product->image = $base64Image;
-        $product->price = $request->input('price');
-        $product->category_id = $request->input('category_id');
-        $product->save();
-        return response()->json(['mesage' => 'success!'], 201);
     }
 }

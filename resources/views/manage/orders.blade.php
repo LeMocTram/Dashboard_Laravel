@@ -40,6 +40,7 @@
                                     <th>Method Payment</th>
                                     <th>Created At</th>
                                     <th>Updated At</th>
+                                    <th>Detail</th>
                                 </tr>
                             </thead>
                             <tbody>

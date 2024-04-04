@@ -23,25 +23,25 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="/managecategories" class="nav-link">
+                <a href="/manage-categories" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Categories</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="/manageproducts" class="nav-link">
+                <a href="/manage-products" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Products</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="/manageorders" class="nav-link">
+                <a href="/manage-orders" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Order</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="/managecustomers" class="nav-link">
+                <a href="/manage-customers" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Customer</p>
                 </a>

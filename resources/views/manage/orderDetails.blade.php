@@ -24,28 +24,23 @@
         <div class="container-fluid">
           <!-- Small boxes (Stat box) -->
             <div class="row">
-              <div class="col-12">
-                  <div class="card">
-                    <div class="btn-add-trash d-grid gap-2 d-md-block">
-                      <a class="btn btn-primary" href="/manage-products" type="button">Return</a>
+                <div class="col-12">
+                    <div class="card">
+                        <table id="order_details_table" class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>OrderID</th>
+                                    <th>ProductID</th>
+                                    <th>Quantity</th>
+                                    <th>Unit Price</th>
+                                    <th>Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
                     </div>
-                    <table id="trash_table" class="table table-bordered table-striped">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Name</th>
-                                <th>Image</th>
-                                <th>Price</th>
-                                <th>CategoryID</th>
-                                <th>Created At</th>
-                                <th>Updated At</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
-                  </div>
                 </div>
             </div>
           <!-- /.row -->
@@ -55,10 +50,6 @@
       </section>
       <!-- /.content -->
     </div>
-    <!-- Modal Image -->
-    <div id="imgModel" class="imgModel">
-        <span class="close">&times;</span>
-        <img class="imgModel-content" alt="Image Product" id="img01">
-    </div>
+  
     <!-- /.content-wrapper -->
 </x-app-layout>

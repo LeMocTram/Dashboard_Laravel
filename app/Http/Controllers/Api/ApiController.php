@@ -47,7 +47,7 @@ class ApiController extends Controller
         $user = User::where("email", $request->email)->first();
         if (!empty($user)) {
             if (Hash::check($request->password, $user->password)) {
-                $token = $user->createToken("myToken")->plainTextToken;
+                $token = $user->createToken("myToken", expiresAt: now()->addHour())->plainTextToken;
                 return response()->json([
                     "status" => true,
                     "message" => "Login successfully!",
