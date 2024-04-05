@@ -18,7 +18,6 @@
         </div><!-- /.container-fluid -->
       </div>
       <!-- /.content-header -->
-
       <!-- Main content -->
       <section class="content">
         <div class="container-fluid">
@@ -29,15 +28,23 @@
                         <table id="order_details_table" class="table table-bordered table-striped">
                             <thead>
                                 <tr>
-                                    <th>ID</th>
                                     <th>OrderID</th>
-                                    <th>ProductID</th>
+                                    <th>Product Name</th>
                                     <th>Quantity</th>
                                     <th>Unit Price</th>
                                     <th>Date</th>
                                 </tr>
                             </thead>
                             <tbody>
+                                    @foreach ($orderDetail as $item)
+                                    <tr>
+                                    <td>{{$item->order_id}}</td>
+                                    <td>{{$item->product->name}}</td>
+                                    <td>{{$item->quantity}}</td>
+                                    <td>{{$item->unit_price}}</td>
+                                    <td>{{$item->created_at}}</td>
+                                    </tr>
+                              @endforeach
                             </tbody>
                         </table>
                     </div>

@@ -71,22 +71,13 @@ class DashboardController extends Controller
         }
         return view('manage.orders');
     }
-    public function getOrderDetails(Request $request, $id)
+    public function getOrderDetails($id)
     {
-        // dump($request);
-        if ($request->ajax()) {
-            $orderDetails = OrderDetail::where('order_id', $id)->get();
-            return datatables()->of($orderDetails)->toJson();
-            die;
-        }
-        return view('manage.orderDetails');
+        $orderDetails = OrderDetail::with('product')->where('order_id', $id)->get();
+        return view('manage.orderDetails', ["orderDetail" => $orderDetails]);
     }
-    public function softDelete(Request $request, $id)
+    public function softDelete($id)
     {
-        // Kiểm tra xác thực của yêu cầu
-        // $this->validate($request, [
-        //     'id' => 'required|exists:products,id',
-        // ]);
 
         // Tìm sản phẩm để update trường deleted
         $product = Product::find($id);
@@ -100,14 +91,9 @@ class DashboardController extends Controller
 
         return redirect()->back()->with('success', 'Sản phẩm đã được xóa tạm thời.');
     }
-    public function restore(Request $request, $id)
+    public function restore($id)
     {
-        // Kiểm tra xác thực của yêu cầu
-        // $this->validate($request, [
-        //     'id' => 'required|exists:products,id',
-        // ]);
 
-        // Tìm sản phẩm để update trường deleted
         $product = Product::find($id);
 
         if (!$product) {

@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
-
+        <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
         <title>{{ config('app.name', 'Laravel') }}</title>
 
         <!-- Fonts -->
@@ -100,7 +100,8 @@
             "responsive": true, "lengthChange": false, "autoWidth": false,
               "processing": true,
               "serverSide": true,
-              "ajax": "{{ route('dashboard.getAllCategories') }}",
+            //   "ajax": "{{ route('dashboard.getAllCategories') }}",
+                ajax: "https://302e-116-193-72-202.ngrok-free.app/manage-categories",
               "columns": [
                 { "data": "id" },
                 { "data": "name" },
@@ -120,7 +121,8 @@
             "responsive": true, "lengthChange": false, "autoWidth": false,
               "processing": true,
               "serverSide": true,
-              "ajax": "{{ route('dashboard.getAllProducts') }}",
+            //   "ajax": "{{ route('dashboard.getAllProducts') }}",
+                ajax: "https://302e-116-193-72-202.ngrok-free.app/manage-products",
               "columns": [
                 { "data": "id" },
                 { "data": "name" },
@@ -166,11 +168,14 @@
 
               ]
         });
-         var table = $('#trash_table').DataTable({
+        var table = $('#trash_table').DataTable({
             "responsive": true, "lengthChange": false, "autoWidth": false,
               "processing": true,
               "serverSide": true,
-              "ajax": "{{ route('dashboard.getAllProductsInTrash') }}",
+            //   "ajax": "{{ route('dashboard.getAllProductsInTrash') }}",
+                ajax: "https://302e-116-193-72-202.ngrok-free.app/manage-trash",
+
+
               "columns": [
                 { "data": "id" },
                 { "data": "name" },
@@ -219,7 +224,8 @@
             "responsive": true, "lengthChange": false, "autoWidth": false,
               "processing": true,
               "serverSide": true,
-              "ajax": "{{ route('dashboard.getAllCustomers') }}",
+            //   "ajax": "{{ route('dashboard.getAllCustomers') }}",
+                ajax :"https://302e-116-193-72-202.ngrok-free.app/manage-customers",
               "columns": [
                 { "data": "id" },
                 { "data": "email" },
@@ -241,7 +247,8 @@
             "responsive": true, "lengthChange": false, "autoWidth": false,
               "processing": true,
               "serverSide": true,
-              "ajax": "{{ route('dashboard.getAllOrders') }}",
+            //   "ajax": "{{ route('dashboard.getAllOrders') }}",
+            ajax:"https://302e-116-193-72-202.ngrok-free.app/manage-orders",
               "columns": [
                 { "data": "id" },
                 { "data": "customer_id" },
@@ -280,23 +287,8 @@
               ]
         });
 
-
         var table = $('#order_details_table').DataTable({
             "responsive": true, "lengthChange": false, "autoWidth": false,
-              "processing": true,
-              "serverSide": true,
-              "ajax": "{{ route('dashboard.getOrderDetails') }}",
-              "columns": [
-                { "data": "id" },
-                { "data": "order_id" },
-                { "data": "product_id" },
-                { "data": "quantity" },
-                { "data": "unit_price" },
-                { "data": "created_at",
-                "render": function(data, type, row) {
-                    return moment(data).format('HH:mm - DD/MM/YYYY');
-                } },
-              ]
         });
         
     });

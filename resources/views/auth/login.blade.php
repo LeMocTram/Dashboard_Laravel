@@ -2,7 +2,8 @@
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
 
-    <form method="POST" action="{{ route('login') }}">
+    {{-- <form method="POST" action="{{ route('login') }}"> --}}
+    <form method="POST" action="https://302e-116-193-72-202.ngrok-free.app/login">
         @csrf
 
         <!-- Email Address -->
